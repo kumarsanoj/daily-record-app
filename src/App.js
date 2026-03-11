@@ -21,7 +21,7 @@ const ExpenseProfitChart = () => {
 
   const fetchRecords = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/daily-record");
+      const res = await axios.get("https://daily-report-node-hgb3ezetaadahebf.southindia-01.azurewebsites.net/daily-record");
 
       const records = res.data && res.data.data;
 
