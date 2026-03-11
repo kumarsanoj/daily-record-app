@@ -13,7 +13,8 @@ const ExpenseProfitChart = () => {
     expense: 0,
     profit: 0
   });
-  const [totalEntry, setTotalEntry] = useState(0)
+  const [totalEntry, setTotalEntry] = useState(0);
+  const [sortedData, setSortedData] = useState([])
 
   useEffect(() => {
     fetchRecords();
@@ -35,6 +36,11 @@ const ExpenseProfitChart = () => {
       });
 
       const profit = totalIncome - totalExpense;
+
+      const sorted = res.data.data.sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+      );
+      setSortedData(sorted);
       setTotalEntry(records.length)
       setChartData({
         expense: totalExpense,
@@ -68,6 +74,37 @@ const Total = chartData.expense + chartData.profit
       <h2>Average Sale per day: {(Total / totalEntry).toFixed(2)} </h2>
       <h2>Average Expense per day: {(chartData.expense / totalEntry).toFixed(2)} </h2>
       <h2>Average Profit per day: {(chartData.profit / totalEntry).toFixed(2)} </h2>
+      <p>--------------------------------------------</p>
+      <div>
+      <h2>Daily Report</h2>
+
+      <table border="1" cellPadding="10">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Total Income</th>
+            <th>Expense</th>
+            <th>Profit</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {sortedData.map((r, index) => {
+            const income = r.cash + r.upi + r.paytm + r.expense;
+            const profit = income - r.expense;
+
+            return (
+              <tr key={index}>
+                <td>{new Date(r.date).toLocaleDateString()}</td>
+                <td>₹{income}</td>
+                <td>₹{r.expense}</td>
+                <td>₹{profit}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
     </div>
   );
 };
