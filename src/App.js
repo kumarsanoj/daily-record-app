@@ -135,7 +135,7 @@ const AddDailyReport = ({ setAddRecord }) => {
     e.preventDefault();
 
     try {
-      await axios.post("https://daily-report-node-hgb3ezetaadahebf.southindia-01.azurewebsites.net/daily-record/daily-record", formData);
+      await axios.post("https://daily-report-node-hgb3ezetaadahebf.southindia-01.azurewebsites.net/daily-record", formData);
 
       setFormData({
         date: "",
